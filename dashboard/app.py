@@ -13,20 +13,20 @@ Session(app)
 # ---------------- Discord OAuth2 -----------------
 CLIENT_ID = "1447189067535224913"
 CLIENT_SECRET = "PwonKPQvj6hUMUcP-Py7Up2GvA3F6iEi"
-REDIRECT_URI = "https://guardianx-wmye.onrender.com"
+REDIRECT_URI = "https://guardianx-wmye.onrender.com/callback"
 API_BASE_URL = "https://discord.com/api"
 
 # ---------------- Helper Functions -----------------
 def get_bot_servers():
     """Automatically read servers bot is in"""
     try:
-        with open("../data/bot_servers.json", "r") as f:
+        with open("data/bot_servers.json", "r") as f:
             return json.load(f)
     except:
         return []
 
 def save_bot_servers(bot_servers):
-    with open("../data/bot_servers.json", "w") as f:
+    with open("data/bot_servers.json", "w") as f:
         json.dump(bot_servers, f, indent=4)
 
 # ---------------- Routes -----------------
@@ -158,4 +158,5 @@ def update_feature(guild_id, feature):
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
+
 
