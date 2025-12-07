@@ -1,20 +1,15 @@
 import discord
 from discord.ext import commands, tasks
-import json, os, random
+import os, random
 
-# Load config
-with open("config.json") as f:
-    config = json.load(f)
+TOKEN = os.getenv("BOT_TOKEN")
+
+if TOKEN is None:
+    raise Exception("BOT_TOKEN not set in Render Environment!")
 
 intents = discord.Intents.all()
-bot = commands.Bot(command_prefix=config["prefix"], intents=intents, help_command=None)
+bot = commands.Bot(command_prefix="!", intents=intents)
 
-# ❌ Remove COGS Loader (NO COGS FOLDER REQUIRED)
-# for filename in os.listdir("./cogs"):
-#     if filename.endswith(".py"):
-#         bot.load_extension(f"cogs.{filename[:-3]}")
-
-# Status rotation
 @tasks.loop(minutes=10)
 async def change_status():
     statuses = [
@@ -26,12 +21,11 @@ async def change_status():
 
 @bot.event
 async def on_ready():
-    print(f"{bot.user} is online! | Powered by JC Cheats")
+    print(f"{bot.user} is online!")
     change_status.start()
 
-# Example basic command
 @bot.command()
 async def ping(ctx):
     await ctx.send("Pong! 🟢")
 
-bot.run(config["token"])
+bot.run(TOKEN)
