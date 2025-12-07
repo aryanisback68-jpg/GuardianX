@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ server.name }} Dashboard | GuardianX</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>{{ server.name }} Dashboard</h1>
+        <p>Welcome, {{ user.username }}!</p>
+        <a href="{{ url_for('logout') }}">Logout</a>
+    </header>
+
+    <main>
+        <section>
+            <h2>Automod</h2>
+            <p>Status: {{ config.automod.enabled | default('Disabled') }}</p>
+        </section>
+
+        <section>
+            <h2>Anti-Nuke</h2>
+            <p>Status: {{ config.antinuke.enabled | default('Disabled') }}</p>
+        </section>
+
+        <section>
+            <h2>Tickets</h2>
+            <p>Status: {{ config.tickets.enabled | default('Disabled') }}</p>
+        </section>
+
+        <section>
+            <h2>Logs</h2>
+            <p>Status: {{ config.logs.enabled | default('Disabled') }}</p>
+        </section>
+
+        <section>
+            <h2>Status Rotation</h2>
+            <p>Messages: {{ config.status.messages | join(', ') if config.status else 'None' }}</p>
+        </section>
+
+        <section>
+            <h2>Embed Builder</h2>
+            <p>Title: {{ config.embed.title if config.embed else 'None' }}</p>
+            <p>Description: {{ config.embed.description if config.embed else 'None' }}</p>
+        </section>
+    </main>
+
+    <footer>
+        <p>Powered by JC Cheats</p>
+    </footer>
+</body>
+</html>
